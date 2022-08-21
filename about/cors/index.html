@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8" />
+  <title>About | Diffuse</title>
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Favicons & Mobile -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+  <link rel="manifest" href="../../site.webmanifest" />
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#8a90a9" />
+  <meta name="msapplication-TileColor" content="#8a90a9" />
+  <meta name="theme-color" content="#8a90a9" />
+
+  <!-- Styles -->
+  <meta name="color-scheme" content="dark light" />
+  <link rel="stylesheet" href="../../about.css" />
+
+</head>
+<body class="bg-white font-body my-16 px-4 text-base01 dark:bg-darkest-hour dark:text-gray-600">
+
+
+  <main class="max-w-2xl mx-auto">
+    <a class="inline-block logo" href="../../">
+      <img class="block dark:hidden" src="../../images/diffuse-dark.svg" />
+      <img class="hidden dark:block" src="../../images/diffuse-light.svg" />
+      <h1>Diffuse</h1>
+    </a>
+
+    <blockquote>
+<p>A music player that connects to your cloud &amp; distributed storage</p>
+</blockquote>
+<p><a href="../../">Return to the application</a><br />
+<a href="../">About</a></p>
+<div id="CORS" />
+<h3>CORS</h3>
+<p>There’s only one thing you need to do yourself so that the service you chose will work with the application, and that’s setting up <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">CORS</a> (Cross-Origin Resource Sharing). Here are the instructions you’ll need for each service:</p>
+<div id="CORS__S3" />
+<h4>Amazon S3</h4>
+<p>You can find the CORS configuration editor under the “Permissions” tab, on the S3 AWS Console.</p>
+<pre><code class="language-json">[
+    {
+        &quot;AllowedHeaders&quot;: [
+            &quot;Range&quot;
+        ],
+        &quot;AllowedMethods&quot;: [
+            &quot;GET&quot;,
+            &quot;HEAD&quot;
+        ],
+        &quot;AllowedOrigins&quot;: [
+            &quot;*&quot;
+        ],
+        &quot;ExposeHeaders&quot;: [
+            &quot;Content-Length&quot;,
+            &quot;Content-Type&quot;
+        ],
+        &quot;MaxAgeSeconds&quot;: 31536000
+    }
+]
+</code></pre>
+<div id="CORS__BTFS" />
+<h4>BTFS</h4>
+<p>Add the domain of the app, with the protocol, to the <strong>list of allowed origins</strong>.</p>
+<pre><code class="language-shell">btfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[&quot;https://diffuse.sh&quot;, &quot;http://diffuse.sh.ipns.localhost:8080&quot;, &quot;http://127.0.0.1:44999&quot;]'
+</code></pre>
+<p>You can also make this change in the Web UI, you’ll find it under “Settings → BTFS Config”.</p>
+<pre><code class="language-javascript">{
+  &quot;API&quot;: {
+    &quot;HTTPHeaders&quot;: {
+      &quot;Access-Control-Allow-Origin&quot;: [
+        ...                                         // Default BTFS values
+
+        &quot;https://diffuse.sh&quot;,                       // 🎵 Default
+        &quot;http://diffuse.sh.ipns.localhost:8080&quot;,    // IPNS
+        &quot;http://127.0.0.1:44999&quot;                    // Electron app
+      ]
+    }
+  }
+}
+</code></pre>
+<div id="CORS__Dropbox" />
+<h4>Dropbox</h4>
+<p><em>Not necessary.</em></p>
+<div id="CORS__Google-Drive" />
+<h4>Google Drive</h4>
+<p><em>Not necessary.</em></p>
+<div id="CORS__IPFS" />
+<h4>IPFS</h4>
+<p>Add the domain of the app, with the protocol, to the <strong>list of allowed origins</strong>.</p>
+<pre><code class="language-shell">ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '[&quot;https://diffuse.sh&quot;, &quot;http://diffuse.sh.ipns.localhost:8080&quot;, &quot;http://127.0.0.1:44999&quot;]'
+</code></pre>
+<p>You can also make this change in the Web UI, you’ll find it under “Settings → IPFS Config”.</p>
+<pre><code class="language-javascript">{
+  &quot;API&quot;: {
+    &quot;HTTPHeaders&quot;: {
+      &quot;Access-Control-Allow-Origin&quot;: [
+        ...                                         // Default IPFS values
+
+        &quot;https://diffuse.sh&quot;,                       // 🎵 Default
+        &quot;http://diffuse.sh.ipns.localhost:8080&quot;,    // IPNS through IPFS Companion
+        &quot;http://127.0.0.1:44999&quot;                    // Electron app
+      ]
+    }
+  }
+}
+</code></pre>
+<div id="CORS__Azure" />
+<h4>Microsoft Azure Storage</h4>
+<p>You can find the CORS configuration under the “Settings -&gt; CORS”.<br />
+Then fill in the following in the input boxes (left to right):</p>
+<pre><code>ALLOWED ORIGINS       *
+ALLOWED METHODS       GET, HEAD
+ALLOWED HEADERS       Range
+EXPOSED HEADERS       Content-Length, Content-Range
+MAX AGE               0
+</code></pre>
+<div id="CORS__WebDAV" />
+<h4>WebDAV</h4>
+<p><strong>Depends on your WebDAV server.</strong><br />
+Example setup for Henrique Dias’s <a href="https://github.com/hacdias/webdav">WebDAV server</a>:</p>
+<pre><code class="language-yaml">cors:
+  enabled: true
+  credentials: true
+
+  allowed_headers:
+    - Authorization
+    - Content-Type
+    - Depth
+    - Range
+  allowed_methods:
+    - GET
+    - HEAD
+    - PROPFIND
+  allowed_hosts:
+    - https://diffuse.sh
+    - http://127.0.0.1:44999
+  exposed_headers:
+    - Content-Length
+    - Content-Type
+</code></pre>
+
+  </main>
+
+
+  <!-- Service worker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad()</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("../../service-worker.js")
+    }
+  </script>
+
+
+</body>
+</html>

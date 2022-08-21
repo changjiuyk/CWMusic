@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8" />
+  <title>About | Diffuse</title>
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Favicons & Mobile -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#8a90a9" />
+  <meta name="msapplication-TileColor" content="#8a90a9" />
+  <meta name="theme-color" content="#8a90a9" />
+
+  <!-- Styles -->
+  <meta name="color-scheme" content="dark light" />
+  <link rel="stylesheet" href="../about.css" />
+
+</head>
+<body class="bg-white font-body my-16 px-4 text-base01 dark:bg-darkest-hour dark:text-gray-600">
+
+
+  <main class="max-w-2xl mx-auto">
+    <a class="inline-block logo" href="../">
+      <img class="block dark:hidden" src="../images/diffuse-dark.svg" />
+      <img class="hidden dark:block" src="../images/diffuse-light.svg" />
+      <h1>Diffuse</h1>
+    </a>
+
+    <blockquote>
+<p>A music player that connects to your cloud &amp; distributed storage</p>
+</blockquote>
+<p><a href="../">Return to the application</a><br />
+<a href="cors/">CORS instructions</a><br />
+<a href="dev/">Developers</a></p>
+<h2>What makes it different?</h2>
+<p>Diffuse is a decentralized music player consisting out of two main parts. One part is the music and the other is your data <small>(eg. playlists)</small>, both of which are in locations of your choice. Meaning that there’s no central server for Diffuse, all of the processing happens on your device and all the data is in your control. You can use the <a href="https://diffuse.sh">web version</a>, the <a href="https://github.com/icidasset/diffuse/releases">native version</a> or host it yourself by downloading the pre-built packages from <a href="https://github.com/icidasset/diffuse">Github</a>.</p>
+<h3>Music layer</h3>
+<p>This layer connects to the services on which your music is stored, no data is written to these services. You can combine all of the following:</p>
+<ul>
+<li><a href="https://aws.amazon.com/s3/">Amazon S3</a></li>
+<li><a href="https://azure.microsoft.com/en-us/services/storage/blobs/">Azure Blob Storage</a></li>
+<li><a href="https://azure.microsoft.com/en-us/services/storage/files/">Azure File Storage</a></li>
+<li><a href="https://dropbox.com/">Dropbox</a></li>
+<li><a href="https://drive.google.com/">Google Drive</a></li>
+<li><a href="https://ipfs.io/">IPFS</a> <small>(supports DNSLink &amp; IPNS)</small></li>
+<li><a href="https://en.wikipedia.org/wiki/WebDAV">WebDAV</a></li>
+</ul>
+<h3>User layer</h3>
+<p>This layer will use a single service on which to store your data. Your data being your settings, favourites, playlists, etc. You can choose between these services:</p>
+<ul>
+<li><a href="https://www.dropbox.com/">Dropbox</a></li>
+<li><a href="https://fission.codes/">Fission</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">IndexedDB</a> <small>(Browser)</small></li>
+<li><a href="https://ipfs.io/">IPFS</a> <small>(using MFS)</small></li>
+<li><a href="https://remotestorage.io/">RemoteStorage</a></li>
+</ul>
+<div id="How" />
+<h2>How does it work?</h2>
+<p>Diffuse locates all the music files on the given services, extracts the metadata and then stores it via the previously-explained user layer.</p>
+<h3>Supported File Formats</h3>
+<ul>
+<li>MP3</li>
+<li>MP4/M4A</li>
+<li>FLAC</li>
+<li>OGG</li>
+<li>WAV</li>
+<li>WEBM</li>
+</ul>
+<p><small><em>Note, support may vary depending on your <a href="https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Containers#Index_of_media_container_formats_file_types">browser</a>.</em></small></p>
+<div id="UI" />
+<h2>UI</h2>
+<p>There are a few “hidden” features:</p>
+<ul>
+<li><strong>Tracks have a context menu</strong> which can be opened by either right clicking,
+or holding it (ie. a long tap). Use the ALT key whilst right clicking
+on a track to show the alternative track-context menu with more specialized options.</li>
+<li><strong>You can reorder items</strong> in the queue or a playlist with drag-and-drop.
+Select the item you want to move by tapping on it, then tap and hold to move it around.</li>
+<li>You can select multiple tracks using the SHIFT key and then add that selection
+to the queue or a playlist using the context menu.</li>
+<li>Click on the now-playing bit to scroll to that track.</li>
+<li>Double tap on a EQ setting to reset it to its default value.</li>
+</ul>
+<h3>Playlists</h3>
+<p>To add something to a playlist, and create that playlist if it doesn’t exist yet, you open the context menu of a track. To move tracks around in a playlist, first select the track, then drag it.</p>
+<h3>Search</h3>
+<pre><code class="language-shell"># Show me every track where the title, artist or album contains the term 'Parkway' and the term 'Drive'.
+Parkway Drive
+
+# Show me every track of which the artist's name starts with 'park'.
+artist:park
+
+# Show me every track from Parkway Drive of which the album starts with &quot;Deep Blue&quot;.
+artist:Parkway Drive album:Deep Blue
+
+# Show me every track from Parkway Drive but not their &quot;Atlas&quot; album.
+artist:Parkway Drive - album:Atlas
+</code></pre>
+<h3>Keyboard</h3>
+<p>The app should be usable with only the keyboard, there are various keyboard shortcuts:</p>
+<pre><code class="language-js">CTRL + K or CMD + K // Show command palette
+
+CTRL + L // Select playlist using autocompletion
+CTRL + N // Scroll to currently-playing track
+CTRL + P // Play / Pause
+CTRL + R // Toggle Repeat
+CTRL + S // Toggle Shuffle
+
+CTRL + [ or ] // Previous / Next
+CTRL + { or } // Seek forwards / Seek backwards
+
+Alternatively you can use the media-control keys,
+if your browser supports it.
+
+ESC // Close overlay, close context-menu, deselect album cover, etc.
+
+CTRL + 1 // Tracks
+CTRL + 2 // Playlists
+CTRL + 3 // Queue
+CTRL + 4 // EQ
+
+CTRL + 8 // Sources
+CTRL + 9 // Settings
+</code></pre>
+<div id="QA" />
+<h2>Q&amp;A</h2>
+<h3>I used version one, where’s my data?</h3>
+<p>There’s a small link, or button if you will, on the “Settings → Import / Export”
+page that will allow you to import data from version 1 of the app. Note that this
+will need to reflect the authentication/storage method you chose in version 1.</p>
+<div id="Misc" />
+<h2>🪐</h2>
+<p><em>Part of the <a href="https://ring.0data.app/#random" target="_blank">App Ring</a></em></p>
+
+  </main>
+
+
+  <!-- Service worker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad()</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("../service-worker.js")
+    }
+  </script>
+
+
+</body>
+</html>

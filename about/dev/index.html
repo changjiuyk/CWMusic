@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8" />
+  <title>About | Diffuse</title>
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Favicons & Mobile -->
+  <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png" />
+  <link rel="manifest" href="../../site.webmanifest" />
+  <link rel="mask-icon" href="../../safari-pinned-tab.svg" color="#8a90a9" />
+  <meta name="msapplication-TileColor" content="#8a90a9" />
+  <meta name="theme-color" content="#8a90a9" />
+
+  <!-- Styles -->
+  <meta name="color-scheme" content="dark light" />
+  <link rel="stylesheet" href="../../about.css" />
+
+</head>
+<body class="bg-white font-body my-16 px-4 text-base01 dark:bg-darkest-hour dark:text-gray-600">
+
+
+  <main class="max-w-2xl mx-auto">
+    <a class="inline-block logo" href="../../">
+      <img class="block dark:hidden" src="../../images/diffuse-dark.svg" />
+      <img class="hidden dark:block" src="../../images/diffuse-light.svg" />
+      <h1>Diffuse</h1>
+    </a>
+
+    <blockquote>
+<p>A music player that connects to your cloud &amp; distributed storage</p>
+</blockquote>
+<p><a href="../../">Return to the application</a><br />
+<a href="../">About</a></p>
+<h2>Adding Sources Using Query Parameter</h2>
+<pre><code class="language-js">JSON = encodeURIComponent(JSON.stringify({
+  // Object contents depends on type of source, see below.
+  kind: &quot;ipfs&quot;,
+  data: {
+    name: &quot;Music from IPFS&quot;,
+
+    // Source type specific
+    directoryHash: &quot;Qm...&quot;
+  }
+}))
+
+&quot;https://diffuse.sh?source=JSON&quot;
+</code></pre>
+<p>You can add multiple “source” query parameters, if you want to add multiple sources.</p>
+<h3>Amazon S3</h3>
+<pre><code class="language-yaml">kind:
+  amazon_s3 
+
+data:
+  # Required
+  accessKey
+  bucketName
+  name
+  region
+  secretKey
+
+  # Optional
+  directoryPath
+  host
+</code></pre>
+<h3>Azure</h3>
+<pre><code class="language-yaml">kind:
+  &quot;azure_file&quot; # or &quot;azure_blob&quot; 
+
+data:
+  # Required
+  accountName
+  accountKey
+  container
+  name
+
+  # Optional
+  directoryPath
+</code></pre>
+<h3>BTFS</h3>
+<pre><code class="language-yaml">kind:
+  btfs 
+
+data:
+  # Required
+  directoryHash
+  name
+
+  # Optional
+  gateway
+</code></pre>
+<h3>Dropbox</h3>
+<pre><code class="language-yaml">kind:
+  dropbox 
+
+data:
+  # Required
+  accessToken
+  appKey
+  name
+
+  # Optional
+  directoryPath
+</code></pre>
+<h3>Google</h3>
+<pre><code class="language-yaml">kind:
+  google 
+
+data:
+  # Required
+  authCode
+  clientId
+  clientSecret
+  name
+
+  # Optional
+  folderId
+</code></pre>
+<h3>IPFS</h3>
+<pre><code class="language-yaml">kind:
+  ipfs 
+
+data:
+  # Required
+  directoryHash
+  name
+
+  # Optional
+  gateway
+  ipns              ← boolean, `t` of `f`
+  local             ← boolean, `t` of `f`
+</code></pre>
+<h3>WebDAV</h3>
+<pre><code class="language-yaml">kind:
+  webdav 
+
+data:
+  # Required
+  name
+  url
+
+  # Optional
+  directoryPath
+  password
+  username
+</code></pre>
+
+  </main>
+
+
+  <!-- Service worker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad()</script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("../../service-worker.js")
+    }
+  </script>
+
+
+</body>
+</html>
